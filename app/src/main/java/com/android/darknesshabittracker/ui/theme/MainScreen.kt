@@ -40,6 +40,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.fontResource
@@ -66,9 +67,10 @@ fun Options(
             .fillMaxSize()
     ) {
         Image(painter = painterResource(
-            id = R.drawable.login),
+            id = R.drawable.dark),
             contentDescription = "Fantasy background",
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
         )
 
         Column(
@@ -81,7 +83,7 @@ fun Options(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
-                    .offset(y = ((-32).dp))
+                    .offset(y = ((-80).dp))
             ) {
                 var triggerButton by remember {
                     mutableStateOf(false)
