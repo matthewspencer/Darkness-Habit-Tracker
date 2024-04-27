@@ -24,7 +24,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -39,22 +38,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.android.darknesshabittracker.R
-
-data class RegistrationField(
-    val label: String,
-    val icon: Int
-)
-
-val fields = listOf(
-    RegistrationField("Username", R.drawable.user_name),
-    RegistrationField("Email address", R.drawable.user_email),
-    RegistrationField("Password", R.drawable.user_password),
-    RegistrationField("Confirm password", R.drawable.user_password)
-)
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,7 +46,7 @@ fun RegistrationScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit
 ) {
-
+    var visibility by remember { mutableStateOf(false) }
     Scaffold(
         topBar = {
                  TopAppBar(
@@ -79,96 +63,207 @@ fun RegistrationScreen(
             painter = painterResource(id = R.drawable.dark2),
             contentDescription = "",
             contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize())
+            modifier = modifier.fillMaxSize())
 
-        Column(
-            modifier = Modifier.padding(paddingValues)
-        ) {
-
+        Column(modifier = modifier.padding(paddingValues)) {
             Fields(
-                field = fields,
-                modifier = Modifier.padding(8.dp)
-            ) {}
+                visibility = visibility,
+                modifier = modifier.padding(8.dp)
+            )
 
-            Spacer(modifier = Modifier.padding(32.dp))
-            OptionsButtons(modifier = Modifier)
+            Spacer(modifier = modifier.padding(32.dp))
+
+            Options(
+                visibility = visibility,
+                modifier = modifier
+            )
         }
+    }
+
+    LaunchedEffect(Unit) {
+        visibility = !visibility
     }
 }
 
 @Composable
 private fun Fields(
+    visibility: Boolean,
     modifier: Modifier,
-    field: List<RegistrationField>,
-    onValueChanged: (String) -> Unit
 ) {
 
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+
     Column() {
-        var visibility by remember { mutableStateOf(false) }
-        fields.forEachIndexed() { index, it ->
-            val fadeInDuration = (index + 1) * 1000
-            AnimatedVisibility(
-                visible = visibility,
-                enter = fadeIn(animationSpec = tween(fadeInDuration))
-            ) {
-                TextField(
-                    value = "",
-                    onValueChange = onValueChanged,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp),
-                    placeholder = { Text(text = it.label)},
-                    trailingIcon = { Icon(painter = painterResource(id = it.icon), contentDescription = "")},
-                    colors = TextFieldDefaults.colors(unfocusedContainerColor = Color.Transparent)
-                )
-            }
+        UserNameTextField(visibility = visibility ) {
+
         }
-        LaunchedEffect(Unit) {
-            visibility = !visibility
+
+        EmailTextField(visibility = visibility) {
+            email = it
+        }
+
+        PasswordTextField(visibility = visibility) {
+            password = it
+        }
+
+        ConfirmPasswordTextField(visibility = visibility) {
+
         }
     }
 }
 
 @Composable
-private fun OptionsButtons(modifier: Modifier) {
+private fun UserNameTextField(
+    visibility: Boolean,
+    onValueChanged: (String) -> Unit
+) {
+    AnimatedVisibility(
+        visible = visibility,
+        enter = fadeIn(animationSpec = tween(500))
+    ) {
+        TextField(
+            value = "Username",
+            onValueChange = onValueChanged,
+            modifier = Modifier
+                .fillMaxWidth(),
+            trailingIcon = { Icon(painter = painterResource(id = R.drawable.user_name), contentDescription = "Username icon" ) },
+            colors = TextFieldDefaults.colors(unfocusedContainerColor = Color.Transparent)
+        )
+    }
+}
+
+@Composable
+private fun EmailTextField(
+    visibility: Boolean,
+    onValueChanged: (String) -> Unit
+) {
+    AnimatedVisibility(
+        visible = visibility,
+        enter = fadeIn(animationSpec = tween(1000))
+    ) {
+        TextField(
+            value = "Email address",
+            onValueChange = onValueChanged,
+            modifier = Modifier
+                .fillMaxWidth(),
+            trailingIcon = { Icon(painter = painterResource(id = R.drawable.user_email), contentDescription = "Email icon" ) },
+            colors = TextFieldDefaults.colors(unfocusedContainerColor = Color.Transparent)
+        )
+    }
+}
+
+@Composable
+private fun PasswordTextField(
+    visibility: Boolean,
+    onValueChanged: (String) -> Unit
+) {
+    AnimatedVisibility(
+        visible = visibility,
+        enter = fadeIn(animationSpec = tween(1500))
+    ) {
+        TextField(
+            value = "Password",
+            onValueChange = onValueChanged,
+            modifier = Modifier
+                .fillMaxWidth(),
+            trailingIcon = { Icon(painter = painterResource(id = R.drawable.user_password), contentDescription = "Password icon" ) },
+            colors = TextFieldDefaults.colors(unfocusedContainerColor = Color.Transparent)
+        )
+    }
+}
+
+@Composable
+private fun ConfirmPasswordTextField(
+    visibility: Boolean,
+    onValueChanged: (String) -> Unit
+) {
+    AnimatedVisibility(
+        visible = visibility,
+        enter = fadeIn(animationSpec = tween(2000))
+    ) {
+        TextField(
+            value = "Confirm password",
+            onValueChange = onValueChanged,
+            modifier = Modifier
+                .fillMaxWidth(),
+            trailingIcon = { Icon(painter = painterResource(id = R.drawable.user_password), contentDescription = "Password confirmation icon" ) },
+            colors = TextFieldDefaults.colors(unfocusedContainerColor = Color.Transparent)
+        )
+    }
+}
+
+
+
+@Composable
+private fun Options(
+    visibility: Boolean,
+    modifier: Modifier
+) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(8.dp)
     ) {
-        Button(onClick = { /*TODO*/ },
-            colors = ButtonDefaults.buttonColors(Color.Black),
-            shape = CutCornerShape(80.dp),
-            modifier = Modifier.fillMaxWidth()
+        AnimatedVisibility(
+            visible = visibility,
+            enter = fadeIn(animationSpec = tween(2500))
         ) {
-            Text(text = "Register")
+            Button(onClick = { /*TODO*/ },
+                colors = ButtonDefaults.buttonColors(Color.Black),
+                shape = CutCornerShape(80.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(text = "Register")
+            }
         }
 
-        Button(onClick = { /*TODO*/ },
-            colors = ButtonDefaults.buttonColors(Color.Black),
-            shape = CutCornerShape(80.dp),
-            modifier = Modifier.fillMaxWidth()) {
-            Text(text = "Sign up with Google")
+        AnimatedVisibility(
+            visible = visibility,
+            enter = fadeIn(animationSpec = tween(3000))
+        ) {
+            Button(onClick = { /*TODO*/ },
+                colors = ButtonDefaults.buttonColors(Color.Black),
+                shape = CutCornerShape(80.dp),
+                modifier = Modifier.fillMaxWidth()) {
+                Text(text = "Sign up with Google")
+            }
         }
 
-        Text(
-            text = "Forgot Password",
-            modifier = Modifier
-                .clickable { }
-                .padding(top = 16.dp),
-            color = Color.White
-        )
+        AnimatedVisibility(
+            visible = visibility,
+            enter = fadeIn(animationSpec = tween(3500))
+        ) {
+            Text(
+                text = "Forgot Password",
+                modifier = Modifier
+                    .clickable { }
+                    .padding(top = 16.dp),
+                color = Color.White
+            )
+        }
     }
-
 }
 
 @Preview
 @Composable
 fun RegistrationScreenPreview() {
     RegistrationScreen() {
-
     }
 }
+
+/*private fun loginUser(context: Context, email: String, password: String) {
+    val auth = FirebaseAuth.getInstance()
+
+    auth.signInWithEmailAndPassword(email, password)
+        .addOnCompleteListener() { task ->
+            if (task.isSuccessful) {
+                Toast.makeText(context, "Login successful", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "Login failed", Toast.LENGTH_SHORT).show()
+            }
+        }
+}*/
 
 /*@Preview
 @Composable
