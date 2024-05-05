@@ -1,5 +1,7 @@
 package com.android.darknesshabittracker
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -9,57 +11,27 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.android.darknesshabittracker.ui.theme.RegistrationScreen
-import com.android.darknesshabittracker.ui.theme.Options
+import com.android.darknesshabittracker.Navigation.Navigation
+import com.android.darknesshabittracker.authentication.domain.Authentication
+import com.android.darknesshabittracker.authentication.domain.RegistrationScreenViewModel
+import com.android.darknesshabittracker.authentication.presentation.RegistrationScreen
+import com.android.darknesshabittracker.authentication.presentation.OptionButtons
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
-
 class MainActivity : ComponentActivity() {
 
-    private lateinit var auth: FirebaseAuth
-
+    private val navigation = Navigation()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
-            AppNavigation()
-
-        }
-
-        auth = Firebase.auth
-
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        val currentUser = auth.currentUser
-        if (currentUser == null) {
-            Toast.makeText(this, "Please, log into the system", Toast.LENGTH_SHORT).show()
+            navigation.AppNavigation(context = this)
         }
     }
 
-    @Composable
-    fun AppNavigation() {
-        val navController = rememberNavController()
-        NavHost(navController = navController, startDestination = "home") {
-            composable("home") {
-                Options() {
-                    navController.navigate("registrationScreen")
-                }
-            }
 
-            composable("registrationScreen") {
-                RegistrationScreen() {
-                    navController.popBackStack()
-                }
-            }
-        }
-    }
 
-    val animationSpec = tween<Float>(
-
-    )
 }
 

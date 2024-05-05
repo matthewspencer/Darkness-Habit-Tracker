@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "971139640996",
+    "project_id": "darkness-habit-tracker",
+    "storage_bucket": "darkness-habit-tracker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:971139640996:android:036f456193c7fa24f38031",
+        "android_client_info": {
+          "package_name": "com.android.darknesshabittracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "971139640996-opj2rmj7sd7vn8pf306ba7tdobnvv1r1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android.darknesshabittracker",
+            "certificate_hash": "ceda6fc96456ef2aea06ea788cffc836a023d102"
+          }
+        },
+        {
+          "client_id": "971139640996-of9puhjov8i5hd6t489o3jkp4tjtm7vn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArVF1ZCWuYAfV9YE2Q5HzEdi1gJ3urBoE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "971139640996-of9puhjov8i5hd6t489o3jkp4tjtm7vn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
