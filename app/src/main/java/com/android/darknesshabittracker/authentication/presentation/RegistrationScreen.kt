@@ -6,7 +6,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -40,12 +39,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.android.darknesshabittracker.MainActivity
 import com.android.darknesshabittracker.R
 import com.android.darknesshabittracker.authentication.domain.Authentication
 import com.android.darknesshabittracker.authentication.domain.RegistrationData
-import com.android.darknesshabittracker.authentication.domain.RegistrationScreenViewModel
-import kotlin.math.log
 
 private const val TAG = "RegistrationScreen"
 @OptIn(ExperimentalMaterial3Api::class)

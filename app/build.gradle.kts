@@ -3,8 +3,9 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     // Add the Google services Gradle plugin
     id("com.google.gms.google-services")
+    id("com.google.dagger.hilt.android")
     id("kotlin-kapt")
-
+    kotlin("kapt")
 }
 
 android {
@@ -66,25 +67,32 @@ dependencies {
     // Navigation compose
     implementation("androidx.navigation:navigation-compose:2.7.7")
     // Import the Firebase BoM
-    implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
+    implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
     // TODO: Add the dependencies for Firebase products you want to use
     // When using the BoM, don't specify versions in Firebase dependencies
     implementation("com.google.firebase:firebase-analytics")
     // Import the BoM for the Firebase platform
-    implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
+    implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
     // Add the dependency for the Firebase Authentication library
     // When using the BoM, you don't specify versions in Firebase library dependencies
-    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-auth:23.0.0")
     implementation(libs.play.services.auth)
     // Add the dependencies for any other desired Firebase products
     // https://firebase.google.com/docs/android/setup#available-libraries
 
     // Room
     val room_version = "2.6.1"
-    implementation("androidx.room:room-runtime:$room_version")
-    annotationProcessor("androidx.room:room-compiler:$room_version")
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    annotationProcessor(libs.room.compiler)
+
+
     // To use Kotlin annotation processing tool (kapt)
     kapt("androidx.room:room-compiler:$room_version")
+
+    // Dagger Hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
 
     // Test
     testImplementation(libs.junit)
@@ -94,4 +102,8 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+}
+
+kapt {
+    correctErrorTypes = true
 }
