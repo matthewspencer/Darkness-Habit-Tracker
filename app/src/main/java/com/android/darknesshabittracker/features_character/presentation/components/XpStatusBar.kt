@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,7 +22,7 @@ import com.android.darknesshabittracker.R
 import com.android.darknesshabittracker.features_character.domain.Charachter
 import com.android.darknesshabittracker.ui.theme.PurpleGrey40
 
-val dummyCharacter = Charachter(
+val dummyCharacter2 = Charachter(
     "John",
     34,
     50,
@@ -31,10 +32,16 @@ val dummyCharacter = Charachter(
 )
 
 @Composable
-fun HpStatusBar(
+fun XpStatusBar(
     modifier: Modifier,
     charachter: Charachter
 ) {
+
+    val barShape = RoundedCornerShape(
+        topStart = 8.dp,
+        bottomStart = 8.dp
+    )
+
     Box(modifier = modifier) {
         Column {
 
@@ -45,25 +52,24 @@ fun HpStatusBar(
                 .background(PurpleGrey40)) {
 
                 Box(modifier = modifier
-                    .fillMaxWidth(charachter.currHp / charachter.maxHp.toFloat())
+                    .fillMaxWidth(charachter.currXp / charachter.lvlUpXp.toFloat())
                     .height(32.dp)
                     .background(Color.Red)) {
-                    
+
                 }
             }
 
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(modifier = modifier.padding(8.dp), painter = painterResource(id = R.drawable.add), contentDescription = "")
 
-                Text(text = "${charachter.currHp} / ${charachter.maxHp}")
+                Text(text = "${charachter.currXp} / ${charachter.lvlUpXp}")
 
                 Spacer(modifier = modifier.weight(1f))
 
                 Text(
                     modifier = modifier.padding(end = 8.dp),
-                    text = "Health"
+                    text = "Experience"
                 )
-
             }
         }
     }
@@ -71,10 +77,6 @@ fun HpStatusBar(
 
 @Preview
 @Composable
-fun HpStatusBarPreview() {
-    HpStatusBar(modifier = Modifier, dummyCharacter)
-}
-
-fun hpValueCheck(hpValue: Int, maxHpValue: Int): Int {
-    return if (hpValue <= maxHpValue) hpValue else maxHpValue
+fun XpStatusBarPreview() {
+    XpStatusBar(modifier = Modifier, dummyCharacter)
 }

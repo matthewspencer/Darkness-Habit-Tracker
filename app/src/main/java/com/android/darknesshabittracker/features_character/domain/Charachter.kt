@@ -4,5 +4,7 @@ data class Charachter(
     val name: String,
     val currHp: Int,
     val maxHp: Int,
-    val xp: Int
+    val lvl: Int,
+    val currXp: Int,
+    val lvlUpXp: Int
 )
